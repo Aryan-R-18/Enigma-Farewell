@@ -11,7 +11,7 @@ export default function PageRealization() {
             <div className="tape tape-1" style={{ transform: 'translateX(-50%) rotate(2deg)' }} />
             <div className="photo-inner">
               <img
-                src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=800&auto=format&fit=crop"
+                src="/pic8.JPG"
                 alt="Friends laughing"
               />
             </div>

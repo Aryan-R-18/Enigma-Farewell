@@ -15,7 +15,7 @@ export default function PageLateNights() {
             <div className="tape tape-2" style={{ top: '-5px', left: '-10px' }} />
             <div className="photo-inner">
               <img
-                src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=800&auto=format&fit=crop"
+                src="/pic3.jpg"
                 alt="Late night food"
               />
             </div>
@@ -38,7 +38,7 @@ export default function PageLateNights() {
             <div className="tape tape-3" style={{ bottom: '-8px', right: '-8px' }} />
             <div className="photo-inner">
               <img
-                src="https://images.unsplash.com/photo-1498036882173-b41c28af5c15?q=80&w=800&auto=format&fit=crop"
+                src="/pic7.jpg"
                 alt="Terrace chilling"
               />
             </div>

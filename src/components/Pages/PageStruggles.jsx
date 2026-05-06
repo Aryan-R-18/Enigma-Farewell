@@ -15,7 +15,7 @@ export default function PageStruggles() {
             <div className="tape tape-3" style={{ bottom: '-8px', right: '-8px' }} />
             <div className="photo-inner">
               <img
-                src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop"
+                src="/pic6.jpg"
                 alt="Group study"
               />
             </div>
@@ -36,7 +36,7 @@ export default function PageStruggles() {
             <div className="tape tape-1" style={{ width: '100px' }} />
             <div className="photo-inner">
               <img
-                src="https://images.unsplash.com/photo-1526676037593-274026601ea3?q=80&w=800&auto=format&fit=crop"
+                src="/pic4.jpg"
                 alt="Sports ground"
               />
             </div>

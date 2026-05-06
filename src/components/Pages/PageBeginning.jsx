@@ -15,7 +15,7 @@ export default function PageBeginning() {
             <div className="tape tape-1" />
             <div className="photo-inner">
               <img
-                src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=800&auto=format&fit=crop"
+                src="/pic2.jpg"
                 alt="Friends gathering"
               />
             </div>
@@ -37,7 +37,7 @@ export default function PageBeginning() {
             <div className="tape tape-2" style={{ top: '-8px', left: '-8px' }} />
             <div className="photo-inner">
               <img
-                src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?q=80&w=800&auto=format&fit=crop"
+                src="/pic1.jpeg"
                 alt="Messy room"
               />
             </div>

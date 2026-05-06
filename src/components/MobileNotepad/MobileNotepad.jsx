@@ -76,9 +76,15 @@ export default function MobileNotepad() {
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Spiral rings bar */}
+      {/* Binding bar with coil rings */}
       <div className="notepad-rings">
-        {RINGS.map((_, i) => <div key={i} className="ring" />)}
+        <div className="rings-row">
+          {RINGS.map((_, i) => (
+            <div key={i} className="ring">
+              <div className="ring-stem" />
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Pages */}
