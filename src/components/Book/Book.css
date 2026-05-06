@@ -1,0 +1,144 @@
+/* ─── Scene & Book Shell ────────────────────────────────────── */
+.scene {
+  width: 95vw;
+  max-width: 1100px;
+  height: 85vh;
+  max-height: 750px;
+  perspective: 2800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.scene::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 5%;
+  right: 5%;
+  height: 40px;
+  background: rgba(0,0,0,0);
+  box-shadow: 0 40px 50px rgba(0,0,0,0.9);
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.book {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+  border-radius: 8px;
+  transition: transform 0.15s ease;
+}
+
+/* Deep spine shadow */
+.book::after {
+  content: '';
+  position: absolute;
+  top: 2%; bottom: 2%;
+  left: calc(50% - 15px);
+  width: 30px;
+  background: rgba(0,0,0,0.6);
+  box-shadow: 0 0 20px 5px rgba(0,0,0,0.8), inset 0 0 10px rgba(0,0,0,1);
+  z-index: -1;
+  border-radius: 10px;
+}
+
+/* ─── Spiral Wire ───────────────────────────────────────────── */
+.spiral-wire {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 54px;
+  z-index: 25;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 54 32' width='54' height='32'%3E%3Cpath d='M 5,16 C 5,-4 49,-4 49,16 C 49,36 5,36 5,16' fill='none' stroke='url(%23metal)' stroke-width='4.5' stroke-linecap='round'/%3E%3Cdefs%3E%3ClinearGradient id='metal' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23333'/%3E%3Cstop offset='25%25' stop-color='%23f4f4f4'/%3E%3Cstop offset='50%25' stop-color='%23888'/%3E%3Cstop offset='75%25' stop-color='%23ddd'/%3E%3Cstop offset='100%25' stop-color='%23111'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E");
+  background-size: 54px 32px;
+  background-repeat: repeat-y;
+  filter: drop-shadow(0px 6px 4px rgba(0,0,0,0.6)) drop-shadow(0px 2px 2px rgba(0,0,0,0.8));
+}
+
+/* ─── Page ──────────────────────────────────────────────────── */
+.page {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  transition: transform 2.5s cubic-bezier(0.3, 0.1, 0.2, 1);
+  cursor: pointer;
+}
+
+.page.flipped {
+  transform: rotateY(-180deg);
+}
+
+/* ─── Front & Back Faces ────────────────────────────────────── */
+.front,
+.back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  padding: 35px;
+  overflow: hidden;
+}
+
+.front {
+  border-radius: 2px 14px 14px 2px;
+  transform: rotateY(0deg);
+  box-shadow: inset -5px 0 20px rgba(0,0,0,0.05);
+  left: 12px;
+  width: calc(100% - 12px);
+  -webkit-mask-image: var(--hole-mask-front);
+  mask-image: var(--hole-mask-front);
+  -webkit-mask-size: 100% 32px;
+  mask-size: 100% 32px;
+  -webkit-mask-repeat: repeat-y;
+  mask-repeat: repeat-y;
+}
+
+.back {
+  border-radius: 14px 2px 2px 14px;
+  transform: rotateY(180deg);
+  box-shadow: inset 5px 0 20px rgba(0,0,0,0.05);
+  left: 0;
+  width: calc(100% - 12px);
+  -webkit-mask-image: var(--hole-mask-back);
+  mask-image: var(--hole-mask-back);
+  -webkit-mask-size: 100% 32px;
+  mask-size: 100% 32px;
+  -webkit-mask-repeat: repeat-y;
+  mask-repeat: repeat-y;
+}
+
+/* ─── Hint ──────────────────────────────────────────────────── */
+.hint {
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #888;
+  font-family: 'Kalam', cursive;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  animation: pulse 2.5s infinite;
+  pointer-events: none;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  white-space: nowrap;
+}
+
+/* ─── Responsive ────────────────────────────────────────────── */
+@media (max-width: 800px) {
+  .scene {
+    width: 100vw;
+    height: 60vh;
+  }
+}

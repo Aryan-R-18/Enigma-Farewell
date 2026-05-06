@@ -1,0 +1,322 @@
+/* ─── CSS Variables ─────────────────────────────────────────── */
+:root {
+  --paper-color: #f4ebd8;
+  --paper-dark: #e0c8b0;
+  --ink-color: #2c241b;
+  --ink-blue: #1c2e36;
+  --sepia-filter: sepia(0.7) contrast(1.25) brightness(0.85) grayscale(0.15);
+  --tape-color: rgba(250, 245, 230, 0.45);
+  --hole-mask-front: radial-gradient(circle at 10px 16px, transparent 6px, black 7px);
+  --hole-mask-back: radial-gradient(circle at calc(100% - 10px) 16px, transparent 6px, black 7px);
+}
+
+/* ─── Reset ─────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Body ──────────────────────────────────────────────────── */
+body {
+  background-color: #121212;
+  background-image: radial-gradient(circle at center, #2a2a2a 0%, #0a0a0a 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Playfair Display', serif;
+  overflow: hidden;
+  color: var(--ink-color);
+}
+
+@media (max-width: 768px) {
+  body {
+    height: 100dvh;
+    overflow: hidden;
+  }
+  #root {
+    height: 100dvh;
+    overflow: hidden;
+  }
+}
+
+/* ─── Paper Texture ─────────────────────────────────────────── */
+.paper-texture {
+  background-color: var(--paper-color);
+  background-image:
+    radial-gradient(circle at center, transparent 40%, rgba(139, 69, 19, 0.08) 100%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.06'/%3E%3C/svg%3E"),
+    linear-gradient(120deg, rgba(255,255,255,0.3) 0%, rgba(0,0,0,0.06) 100%);
+}
+
+/* ─── Ruled Paper ───────────────────────────────────────────── */
+.paper-texture.ruled {
+  background-image:
+    linear-gradient(to bottom, transparent 31px, rgba(130, 170, 190, 0.4) 32px),
+    radial-gradient(circle at center, transparent 40%, rgba(139, 69, 19, 0.08) 100%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.06'/%3E%3C/svg%3E"),
+    linear-gradient(120deg, rgba(255,255,255,0.3) 0%, rgba(0,0,0,0.06) 100%);
+  background-size: 100% 32px, 100% 100%, 200px 200px, 100% 100%;
+  background-position: 0 16px, 0 0, 0 0, 0 0;
+}
+
+/* ─── Typography Helpers ────────────────────────────────────── */
+.handwritten {
+  font-family: 'Kalam', cursive;
+  color: var(--ink-blue);
+}
+
+.cursive {
+  font-family: 'Caveat', cursive;
+  color: var(--ink-color);
+  font-size: 1.7rem;
+  line-height: 32px;
+  text-shadow: 0px 0px 1px rgba(0,0,0,0.1);
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 25px;
+  line-height: 32px;
+  border-bottom: 2px dashed rgba(0,0,0,0.15);
+  padding-bottom: 5px;
+  display: inline-block;
+}
+
+/* ─── Polaroid ──────────────────────────────────────────────── */
+.polaroid {
+  background: #fcfcfc;
+  padding: 12px 12px 50px 12px;
+  box-shadow: 3px 5px 20px rgba(0,0,0,0.25), inset 0 0 5px rgba(0,0,0,0.03);
+  position: relative;
+  display: inline-block;
+  margin: 15px;
+  width: 90%;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.polaroid::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  box-shadow: inset 0 0 25px rgba(0,0,0,0.05);
+  pointer-events: none;
+}
+
+.polaroid img {
+  width: 100%;
+  height: auto;
+  max-height: 380px;
+  object-fit: cover;
+  filter: var(--sepia-filter);
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.photo-inner {
+  position: relative;
+}
+
+.photo-inner::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  box-shadow: inset 0px 0px 15px rgba(0,0,0,0.4);
+  pointer-events: none;
+}
+
+.polaroid-caption {
+  position: absolute;
+  bottom: 14px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-family: 'Caveat', cursive;
+  font-size: 1.5rem;
+  color: #111;
+  opacity: 0.85;
+}
+
+/* ─── Tape ──────────────────────────────────────────────────── */
+.tape {
+  position: absolute;
+  width: 85px;
+  height: 28px;
+  background-color: var(--tape-color);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15), inset 0 0 5px rgba(255,255,255,0.5);
+  backdrop-filter: blur(2px);
+  border-left: 2px dotted rgba(0,0,0,0.08);
+  border-right: 2px dotted rgba(0,0,0,0.08);
+  z-index: 10;
+}
+
+.tape-1 { top: -12px; left: 50%; transform: translateX(-50%) rotate(-3deg); }
+.tape-2 { top: -10px; left: -15px; transform: rotate(-45deg); width: 60px; }
+.tape-3 { bottom: -10px; right: -15px; transform: rotate(-45deg); width: 60px; }
+
+/* ─── Paperclip ─────────────────────────────────────────────── */
+.paperclip {
+  position: absolute;
+  width: 16px;
+  height: 45px;
+  border: 3px solid #8e9496;
+  border-radius: 10px;
+  z-index: 10;
+  box-shadow: 3px 3px 4px rgba(0,0,0,0.2), inset 1px 1px 2px rgba(255,255,255,0.8);
+  background: transparent;
+}
+
+.paperclip::after {
+  content: '';
+  position: absolute;
+  top: 5px; left: 3px; bottom: -5px; right: 3px;
+  border: 2px solid #8e9496;
+  border-radius: 6px;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* ─── Coffee Stain ──────────────────────────────────────────── */
+.coffee-stain {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border: 5px solid rgba(111, 78, 55, 0.12);
+  border-radius: 50%;
+  border-top-color: transparent;
+  border-right: 3px solid rgba(111, 78, 55, 0.18);
+  filter: blur(0.5px);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* ─── Doodles ───────────────────────────────────────────────── */
+.doodle {
+  position: absolute;
+  opacity: 0.65;
+  pointer-events: none;
+  filter: drop-shadow(0px 0px 1px rgba(0,0,0,0.1));
+}
+
+.doodle-arrow {
+  width: 60px;
+  height: 60px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%231c2e36' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 50 Q 50 20 80 50 M 60 30 L 80 50 L 60 70'/%3E%3C/svg%3E") no-repeat center;
+}
+
+.doodle-star {
+  width: 40px;
+  height: 40px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%238c2727' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M50 10 L60 40 L90 40 L65 60 L75 90 L50 70 L25 90 L35 60 L10 40 L40 40 Z'/%3E%3C/svg%3E") no-repeat center;
+}
+
+/* ─── Torn Paper ────────────────────────────────────────────── */
+.torn-paper {
+  background: #fdfbf7;
+  padding: 18px;
+  font-family: 'Kalam', cursive;
+  font-size: 1.25rem;
+  position: absolute;
+  box-shadow: 4px 4px 15px rgba(0,0,0,0.15);
+  transform: rotate(2deg);
+  clip-path: polygon(
+    0% 0%, 100% 0%, 100% 100%,
+    96% 98%, 92% 100%, 88% 97%, 84% 100%, 80% 98%, 76% 100%,
+    72% 97%, 68% 100%, 64% 98%, 60% 100%, 56% 97%, 52% 100%,
+    48% 98%, 44% 100%, 40% 97%, 36% 100%, 32% 98%, 28% 100%,
+    24% 97%, 20% 100%, 16% 98%, 12% 100%, 8% 97%, 4% 100%, 0% 98%
+  );
+  color: #1a2529;
+  z-index: 5;
+}
+
+/* ─── Layout Helpers ────────────────────────────────────────── */
+.layout-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  position: relative;
+}
+
+.layout-scattered {
+  position: relative;
+  height: 100%;
+}
+
+/* ─── Fold Shadows ──────────────────────────────────────────── */
+.fold-shadow {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.15) 15%, rgba(0,0,0,0.05) 25%, transparent 100%);
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  transition: background-position 2.5s cubic-bezier(0.3, 0.1, 0.2, 1);
+  pointer-events: none;
+  z-index: 20;
+}
+
+.page.flipped .front .fold-shadow {
+  background-position: -100% 0;
+}
+
+.fold-shadow-back {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to left, transparent 0%, rgba(0,0,0,0.15) 15%, rgba(0,0,0,0.05) 25%, transparent 100%);
+  background-size: 300% 100%;
+  background-position: -100% 0;
+  transition: background-position 2.5s cubic-bezier(0.3, 0.1, 0.2, 1);
+  pointer-events: none;
+  z-index: 20;
+}
+
+.page.flipped .back .fold-shadow-back {
+  background-position: 100% 0;
+}
+
+/* ─── Red Margin Lines ──────────────────────────────────────── */
+.front.ruled::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 55px;
+  width: 2px;
+  background-color: rgba(220, 80, 80, 0.3);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.back.ruled::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  right: 55px;
+  width: 2px;
+  background-color: rgba(220, 80, 80, 0.3);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.front.ruled { padding-left: 75px; padding-right: 25px; }
+.back.ruled  { padding-right: 75px; padding-left: 25px; }
+
+/* ─── Animations ────────────────────────────────────────────── */
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 1; }
+}
+
+@keyframes twinkle {
+  0%   { opacity: 0.3; transform: scale(0.7); }
+  100% { opacity: 1;   transform: scale(1.3); }
+}
+
+/* ─── Responsive ────────────────────────────────────────────── */
+@media (max-width: 800px) {
+  .cursive        { font-size: 1.3rem; }
+  .polaroid       { margin: 10px; padding: 8px 8px 35px 8px; }
+  .polaroid img   { max-height: 160px; }
+  .torn-paper     { font-size: 1rem; padding: 12px; }
+}

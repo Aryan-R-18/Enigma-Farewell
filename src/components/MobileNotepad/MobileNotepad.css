@@ -1,0 +1,341 @@
+/* ─── Mobile Notepad Shell ──────────────────────────────────── */
+.notepad-scene {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Spiral rings bar at top ───────────────────────────────── */
+.notepad-rings {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  z-index: 100;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.6);
+}
+
+.ring {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 3px solid #555;
+  background: radial-gradient(circle at 35% 35%, #888, #333);
+  box-shadow:
+    inset 0 2px 3px rgba(255,255,255,0.15),
+    0 2px 4px rgba(0,0,0,0.6);
+  position: relative;
+}
+
+/* Ring hole punch on page */
+.ring::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px; height: 8px;
+  background: #111;
+  border-radius: 50%;
+}
+
+/* ─── Page stack ────────────────────────────────────────────── */
+.notepad-pages {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ─── Individual notepad page ───────────────────────────────── */
+.notepad-page {
+  position: absolute;
+  inset: 0;
+  top: 36px; /* below rings bar */
+  background-color: #f4ebd8;
+  background-image:
+    linear-gradient(to bottom, transparent 31px, rgba(130, 170, 190, 0.35) 32px),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  background-size: 100% 32px, 200px 200px;
+  background-position: 0 16px, 0 0;
+  /* Red margin line */
+  border-left: 3px solid rgba(220, 80, 80, 0.25);
+  padding: 20px 20px 80px 28px;
+  overflow-y: auto;
+  /* Tear-off shadow at top */
+  box-shadow:
+    0 -4px 0 rgba(0,0,0,0.08),
+    0 8px 30px rgba(0,0,0,0.4);
+  /* Stacking & animation */
+  transform: translateY(0%);
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity   0.4s ease;
+  will-change: transform;
+}
+
+/* Torn top edge */
+.notepad-page::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    #f4ebd8 0px, #f4ebd8 8px,
+    #e0c8a8 8px, #e0c8a8 10px
+  );
+  opacity: 0.7;
+}
+
+/* Hole punches to align with rings */
+.notepad-page::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0; right: 0;
+  height: 10px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent calc(50% - 55px),
+    #1a1a1a calc(50% - 55px), #1a1a1a calc(50% - 44px),
+    transparent calc(50% - 44px),
+    transparent calc(50% - 11px),
+    #1a1a1a calc(50% - 11px), #1a1a1a calc(50%),
+    transparent calc(50%),
+    transparent calc(50% + 11px),
+    #1a1a1a calc(50% + 11px), #1a1a1a calc(50% + 22px),
+    transparent calc(50% + 22px),
+    transparent calc(50% + 44px),
+    #1a1a1a calc(50% + 44px), #1a1a1a calc(50% + 55px),
+    transparent calc(50% + 55px)
+  );
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ── Page states ── */
+
+/* Current page: visible, in place */
+.notepad-page.np-current {
+  transform: translateY(0%);
+  opacity: 1;
+  z-index: 10;
+}
+
+/* Next pages: stacked below (slightly peeking) */
+.notepad-page.np-below {
+  transform: translateY(4px);
+  opacity: 1;
+  z-index: 5;
+}
+
+.notepad-page.np-below-2 {
+  transform: translateY(8px);
+  opacity: 0.85;
+  z-index: 4;
+}
+
+/* Page being torn off — flies up and out */
+.notepad-page.np-exit {
+  transform: translateY(-105%);
+  opacity: 0;
+  z-index: 15;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.6, 1),
+              opacity   0.4s ease 0.1s;
+}
+
+/* Page coming back down */
+.notepad-page.np-enter {
+  transform: translateY(-105%);
+  opacity: 0;
+  z-index: 15;
+  transition: none; /* instant reposition before animating in */
+}
+
+.notepad-page.np-enter-active {
+  transform: translateY(0%);
+  opacity: 1;
+  z-index: 15;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+              opacity   0.3s ease;
+}
+
+/* Pages already passed (hidden below) */
+.notepad-page.np-done {
+  transform: translateY(0%);
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ─── Cover page special styling ────────────────────────────── */
+.notepad-page.np-cover {
+  background-color: #3b2015;
+  background-image:
+    radial-gradient(circle at center, transparent 20%, rgba(0,0,0,0.6) 100%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.2'/%3E%3C/svg%3E");
+  border-left: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 30px;
+}
+
+.np-cover-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: #e8cba9;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+  border-bottom: 2px solid rgba(232,203,169,0.4);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.np-cover-sub {
+  font-family: 'Kalam', cursive;
+  font-size: 1.5rem;
+  color: #bfa182;
+  transform: rotate(-2deg);
+  display: inline-block;
+}
+
+/* ─── Page content layout ───────────────────────────────────── */
+.np-page-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+.np-page-title {
+  font-family: 'Kalam', cursive;
+  font-size: 1.8rem;
+  color: var(--ink-blue);
+  border-bottom: 2px dashed rgba(0,0,0,0.12);
+  padding-bottom: 6px;
+  display: inline-block;
+  line-height: 32px;
+}
+
+.np-page-title.red { color: #8c2727; }
+
+.np-photo {
+  width: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 3px 4px 14px rgba(0,0,0,0.2);
+  position: relative;
+  background: #fcfcfc;
+  padding: 8px 8px 36px 8px;
+}
+
+.np-photo img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  filter: sepia(0.7) contrast(1.25) brightness(0.85) grayscale(0.15);
+  display: block;
+}
+
+.np-photo-caption {
+  position: absolute;
+  bottom: 8px;
+  left: 0; right: 0;
+  text-align: center;
+  font-family: 'Caveat', cursive;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+/* Tape on photo */
+.np-tape {
+  position: absolute;
+  width: 70px; height: 22px;
+  background: rgba(250, 245, 230, 0.5);
+  border-left: 2px dotted rgba(0,0,0,0.08);
+  border-right: 2px dotted rgba(0,0,0,0.08);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  top: -10px; left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  z-index: 2;
+}
+
+.np-quote {
+  font-family: 'Caveat', cursive;
+  font-size: 1.25rem;
+  color: var(--ink-color);
+  line-height: 32px;
+  padding: 4px 0;
+}
+
+.np-quote.italic {
+  font-style: italic;
+  color: #8c2727;
+}
+
+/* ─── Navigation buttons ────────────────────────────────────── */
+.np-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+  z-index: 200;
+}
+
+.np-nav-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #e8cba9;
+  font-family: 'Kalam', cursive;
+  font-size: 1rem;
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: background 0.2s, transform 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.np-nav-btn:active { transform: scale(0.95); }
+.np-nav-btn:disabled { opacity: 0.25; pointer-events: none; }
+
+.np-page-counter {
+  font-family: 'Kalam', cursive;
+  font-size: 1rem;
+  color: rgba(255,255,255,0.5);
+}
+
+/* ─── Swipe hint ────────────────────────────────────────────── */
+.np-hint {
+  position: fixed;
+  bottom: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.35);
+  font-family: 'Kalam', cursive;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  animation: pulse 2.5s infinite;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 200;
+}
