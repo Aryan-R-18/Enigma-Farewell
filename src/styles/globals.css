@@ -320,3 +320,46 @@ body {
   .polaroid img   { max-height: 160px; }
   .torn-paper     { font-size: 1rem; padding: 12px; }
 }
+
+/* ─── Just Another Hand — page content only ────────────────── */
+/* Scoped to ruled pages so cover/back-cover are unaffected     */
+.front.ruled .cursive,
+.back.ruled  .cursive,
+.front.ruled .handwritten,
+.back.ruled  .handwritten,
+.front.ruled .torn-paper,
+.back.ruled  .torn-paper,
+.front.ruled .polaroid-caption,
+.back.ruled  .polaroid-caption,
+.front.ruled h2.title,
+.back.ruled  h2.title,
+.front.ruled h3.handwritten,
+.back.ruled  h3.handwritten {
+  font-family: 'Just Another Hand', cursive;
+}
+
+/* Scale up slightly — Just Another Hand reads best a bit larger */
+.front.ruled .cursive,
+.back.ruled  .cursive {
+  font-size: 1.9rem;
+}
+
+.front.ruled .torn-paper,
+.back.ruled  .torn-paper {
+  font-size: 1.4rem;
+}
+
+.front.ruled .polaroid-caption,
+.back.ruled  .polaroid-caption {
+  font-size: 1.6rem;
+}
+
+/* Mobile notepad pages */
+.np-quote,
+.np-page-title,
+.np-photo-caption {
+  font-family: 'Just Another Hand', cursive;
+}
+
+.np-quote       { font-size: 1.5rem; }
+.np-photo-caption { font-size: 1.4rem; }

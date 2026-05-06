@@ -9,37 +9,42 @@ export default function MusicToggle() {
 
   useEffect(() => {
     const audio = new Audio(MUSIC_URL);
-    audio.loop   = true;
-    audio.volume = 0.5;
-    audioRef.current = audio;
+    audio.loop        = true;
+    audio.volume      = 0.45;
+    audio.preload     = 'auto';
+    audioRef.current  = audio;
 
     const start = () => {
       if (started.current) return;
       started.current = true;
       audio.play().catch(() => {});
-      // remove listeners once started
-      window.removeEventListener('click',      start);
-      window.removeEventListener('touchstart', start);
-      window.removeEventListener('keydown',    start);
+      window.removeEventListener('click',      start, true);
+      window.removeEventListener('touchstart', start, true);
+      window.removeEventListener('touchend',   start, true);
+      window.removeEventListener('keydown',    start, true);
     };
 
-    // Try immediate autoplay first (works if browser allows it)
+    // Try immediate autoplay (works on desktop / some browsers)
     audio.play().then(() => {
       started.current = true;
     }).catch(() => {
-      // Blocked — wait for first interaction
-      window.addEventListener('click',      start);
-      window.addEventListener('touchstart', start);
-      window.addEventListener('keydown',    start);
+      // Blocked — fire on first user interaction anywhere on the page
+      // Use capture phase so it fires before anything else consumes the event
+      window.addEventListener('click',      start, true);
+      window.addEventListener('touchstart', start, true);
+      window.addEventListener('touchend',   start, true);
+      window.addEventListener('keydown',    start, true);
     });
 
     return () => {
       audio.pause();
-      window.removeEventListener('click',      start);
-      window.removeEventListener('touchstart', start);
-      window.removeEventListener('keydown',    start);
+      audio.src = '';
+      window.removeEventListener('click',      start, true);
+      window.removeEventListener('touchstart', start, true);
+      window.removeEventListener('touchend',   start, true);
+      window.removeEventListener('keydown',    start, true);
     };
   }, []);
 
-  return null; // no UI
+  return null;
 }
