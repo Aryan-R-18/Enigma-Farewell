@@ -28,6 +28,7 @@ const NP_PAGES = [
     quote: '"Tumhara result decide nahi karta ki tum loser ho ki nahi, tumhari koshish decide karti hai."',
   },
   { id: 'farewell',    type: 'farewell' },
+  { id: 'backcover',   type: 'backcover' },
 ];
 
 const TOTAL = NP_PAGES.length;
@@ -87,7 +88,7 @@ export default function MobileNotepad() {
           return (
             <div
               key={page.id}
-              className={`notepad-page ${state}${page.type === 'cover' ? ' np-cover' : ''}`}
+              className={`notepad-page ${state}${page.type === 'cover' ? ' np-cover' : ''}${page.type === 'backcover' ? ' np-backcover' : ''}`}
             >
               <PageContent page={page} />
             </div>
@@ -106,7 +107,7 @@ export default function MobileNotepad() {
         </button>
       </div>
 
-      <div className="np-hint">Swipe up to turn page</div>
+      <div className="np-hint"></div>
     </div>
   );
 }
@@ -116,8 +117,8 @@ function PageContent({ page }) {
   if (page.type === 'cover') {
     return (
       <>
-        <div className="np-cover-title">The Hostel Diaries</div>
-        <div className="np-cover-sub">Losers? No, Fighters.</div>
+        <div className="np-cover-title">Enigma Diaries</div>
+        <div className="np-cover-sub">Coders? No, Fighters.</div>
       </>
     );
   }
@@ -125,9 +126,17 @@ function PageContent({ page }) {
   if (page.type === 'farewell') {
     return (
       <div className="np-page-content">
-        {/* Reuse the farewell pocket/envelope trigger */}
         <PageFarewell mobileMode />
       </div>
+    );
+  }
+
+  if (page.type === 'backcover') {
+    return (
+      <>
+        <div className="np-backcover-text">Some bonds are forever.</div>
+        <div className="np-backcover-star" />
+      </>
     );
   }
 

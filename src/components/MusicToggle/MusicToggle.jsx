@@ -1,31 +1,45 @@
-import React, { useState, useRef } from 'react';
-import './MusicToggle.css';
+import { useEffect, useRef } from 'react';
 
 const MUSIC_URL =
-  'https://cdn.pixabay.com/download/audio/2022/05/16/audio_b2f9ebfb14.mp3?filename=acoustic-guitars-110023.mp3';
+  '/bgplay.mp3';
 
 export default function MusicToggle() {
-  const [playing, setPlaying] = useState(false);
   const audioRef = useRef(null);
+  const started  = useRef(false);
 
-  const toggle = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (playing) {
+  useEffect(() => {
+    const audio = new Audio(MUSIC_URL);
+    audio.loop   = true;
+    audio.volume = 0.5;
+    audioRef.current = audio;
+
+    const start = () => {
+      if (started.current) return;
+      started.current = true;
+      audio.play().catch(() => {});
+      // remove listeners once started
+      window.removeEventListener('click',      start);
+      window.removeEventListener('touchstart', start);
+      window.removeEventListener('keydown',    start);
+    };
+
+    // Try immediate autoplay first (works if browser allows it)
+    audio.play().then(() => {
+      started.current = true;
+    }).catch(() => {
+      // Blocked — wait for first interaction
+      window.addEventListener('click',      start);
+      window.addEventListener('touchstart', start);
+      window.addEventListener('keydown',    start);
+    });
+
+    return () => {
       audio.pause();
-    } else {
-      audio.volume = 0.5;
-      audio.play();
-    }
-    setPlaying((p) => !p);
-  };
+      window.removeEventListener('click',      start);
+      window.removeEventListener('touchstart', start);
+      window.removeEventListener('keydown',    start);
+    };
+  }, []);
 
-  return (
-    <>
-      <audio ref={audioRef} loop src={MUSIC_URL} />
-      <button className="music-toggle" onClick={toggle} aria-label={playing ? 'Pause music' : 'Play music'}>
-        {playing ? '⏸️ Pause Music' : '🎵 Play Music'}
-      </button>
-    </>
-  );
+  return null; // no UI
 }

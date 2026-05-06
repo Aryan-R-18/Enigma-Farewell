@@ -1,0 +1,44 @@
+.site-footer {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-family: 'Kalam', cursive;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.35);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 0.5px;
+}
+
+.footer-heart {
+  color: #4caf50;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.footer-logo {
+  height: 22px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 3px;
+  opacity: 0.6;
+  filter: brightness(1.2);
+  vertical-align: middle;
+}
+
+/* Mobile — sit above the nav bar */
+@media (max-width: 768px) {
+  .site-footer {
+    bottom: 72px;
+    font-size: 0.75rem;
+  }
+
+  .footer-logo {
+    height: 18px;
+  }
+}

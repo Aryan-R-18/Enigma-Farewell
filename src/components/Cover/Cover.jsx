@@ -8,8 +8,8 @@ export default function Cover() {
       <div className="front cover">
         <div className="fold-shadow" />
         <div className="cover-inner">
-          <h1 className="cover-title">The Hostel Diaries</h1>
-          <p className="cover-subtitle">Losers? No, Fighters.</p>
+          <h1 className="cover-title">Enigma Diaries</h1>
+          <p className="cover-subtitle">Coders? No, Fighters.</p>
         </div>
       </div>
 
@@ -18,7 +18,7 @@ export default function Cover() {
         <div className="fold-shadow-back" />
         <div className="layout-center" style={{ opacity: 0.7 }}>
           <h2 className="handwritten" style={{ fontSize: '2rem', textDecoration: 'underline', color: '#1c2e36' }}>
-            Property of H4
+            Property of Enigma Crew
           </h2>
           <p className="cursive" style={{ marginTop: '25px' }}>
             If found, do not return.<br />Just read it and smile.
