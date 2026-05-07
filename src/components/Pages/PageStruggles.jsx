@@ -8,7 +8,7 @@ export default function PageStruggles() {
         <div className="fold-shadow" />
         <div className="layout-scattered">
           <h2 className="title handwritten" style={{ color: '#8c2727', marginLeft: '10px' }}>
-            The Struggles
+            The Hostel Struggles
           </h2>
 
           <div className="polaroid" style={{ transform: 'rotate(1deg)', width: '90%', marginLeft: '5%' }}>
@@ -23,7 +23,7 @@ export default function PageStruggles() {
           </div>
 
           <p className="cursive" style={{ marginTop: '20px', padding: '0 10px', textAlign: 'center', position: 'relative' }}>
-            "Pata hai yahan pe loser kisko kehte hain? Jiske paas jeetne ka option ho, aur phir bhi woh haar maan le."
+            "Success ki buniyaad sirf dimaag nahi, hostel ki bakchodi bhi hoti hai"
           </p>
         </div>
       </div>
@@ -40,11 +40,11 @@ export default function PageStruggles() {
                 alt="Sports ground"
               />
             </div>
-            <div className="polaroid-caption" style={{ fontSize: '1.3rem' }}>GC '19. We lost. But we fought.</div>
+            <div className="polaroid-caption" style={{ fontSize: '1.3rem' }}>We Fought and we Won.</div>
           </div>
 
           <h3 className="handwritten" style={{ fontSize: '1.9rem', marginTop: '25px', color: '#1c2e36', padding: '0 10px' }}>
-            "Sache dost woh hote hain jo bure waqt mein bhi hasna sikha dein."
+            "Pata hai yahan pe loser kisko kehte hain? Jiske paas jeetne ka option ho, aur phir bhi woh haar maan le."
           </h3>
         </div>
       </div>

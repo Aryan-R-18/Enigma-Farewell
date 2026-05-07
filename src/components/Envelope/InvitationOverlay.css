@@ -104,19 +104,20 @@
 }
 
 .message {
-  font-family: 'Dancing Script', cursive;
-  font-size: 1.8rem;
+  font-family: 'Just Another Hand', cursive;
+  font-size: 1.35rem;
   color: var(--text-color);
-  line-height: 1.4;
-  letter-spacing: 0.5px;
+  line-height: 1.55;
+  letter-spacing: 0.3px;
 }
 
 .juniors-text {
   display: block;
-  margin-top: 15px;
-  font-size: 1.4rem;
-  font-weight: 700;
+  margin-top: 8px;
+  font-size: 1.2rem;
+  font-weight: 400;
   color: var(--accent-color);
+  font-family: 'Just Another Hand', cursive;
 }
 
 /* ─── Front flaps ───────────────────────────────────────────── */

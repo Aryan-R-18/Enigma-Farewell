@@ -40,9 +40,13 @@ export default function InvitationOverlay({ onClose }) {
           {/* Letter */}
           <div className="letter">
             <p className="message">
-              You are warmly invited<br />
-              to our Farewell Party!
-              <span className="juniors-text">~ Your Juniors ✨</span>
+              Dear Seniors,<br />
+              Please join us one last time<br />
+              at the E-Learning Centre<br />
+              tomorrow at 12:00 PM<br />
+              <span style={{ display: 'block', marginTop: '4px' }} />
+              Thank you,
+              <span className="juniors-text">~ Your beloved Juniors ✨</span>
             </p>
           </div>
 
